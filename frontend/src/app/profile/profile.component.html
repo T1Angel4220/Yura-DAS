@@ -1,0 +1,31 @@
+<div class="container" style="animation: fadeIn 0.5s ease-out; max-width: 600px; margin: 0 auto;">
+  <div style="margin-bottom: 24px; text-align: center;">
+    <h2 style="font-size: 2.2rem; color: var(--text-dark); letter-spacing: -0.5px; font-weight: 800;">Mi Impacto</h2>
+    <p style="color: var(--text-light); font-size: 1.1rem;">Tu compromiso con el medio ambiente se refleja aquí.</p>
+  </div>
+
+  <div *ngIf="loading" style="text-align: center; padding: 40px; color: var(--text-light);">
+    <p>Cargando tu perfil ecológico...</p>
+  </div>
+
+  <div *ngIf="!loading && perfil" class="profile-card">
+    <div class="avatar">🌱</div>
+    <h3 style="font-size: 1.8rem; font-weight: 800; color: var(--text-dark); margin-bottom: 10px;">{{ perfil.nombre }}</h3>
+    <div class="level-badge">Rango: {{ perfil.nivel }}</div>
+    
+    <div style="margin-top: 20px; padding: 20px; background: #F8FAF9; border-radius: 15px;">
+      <div class="points-display">{{ perfil.puntos }}</div>
+      <div style="color: var(--text-light); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem;">Yura Puntos</div>
+      
+      <div class="progress-container">
+        <div class="progress-bar" [style.width]="perfil.progreso_porcentaje + '%'"></div>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700; color: var(--text-light);">
+        <span>Nivel Actual</span>
+        <span>Meta: {{ perfil.siguiente_meta }} pts</span>
+      </div>
+    </div>
+    
+    <p style="margin-top: 24px; color: var(--text-light); font-size: 0.95rem; line-height: 1.5;">Sigue usando la guía y marcando los días de recolección para subir de nivel y desbloquear recompensas increíbles.</p>
+  </div>
+</div>

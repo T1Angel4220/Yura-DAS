@@ -42,6 +42,14 @@ export class CalendarComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
+    if(typeof localStorage !== 'undefined') {
+      const userStr = localStorage.getItem('user');
+      if (userStr) {
+        const user = JSON.parse(userStr);
+        const id_usuario = user.usuario?.id_usuario || user.id_usuario;
+        this.http.post('http://localhost:3000/gamificacion/sumar', { id_usuario, accion: 'VER_CALENDARIO' }).subscribe({ next: () => {}, error: () => {} });
+      }
+    }
     this.http.get('http://localhost:3000/calendario').subscribe({
       next: (data: any) => {
         this.calendario = data;

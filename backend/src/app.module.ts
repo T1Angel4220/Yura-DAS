@@ -9,6 +9,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/user.entity';
 import { Residuo } from './guide/residuo.entity';
 import { Calendario } from './calendar/calendario.entity';
+import { GamificacionModule } from './gamificacion/gamificacion.module';
+import { RecompensasModule } from './recompensas/recompensas.module';
+import { HistorialPunto } from './gamificacion/historial-punto.entity';
+import { Recompensa } from './recompensas/recompensa.entity';
+import { Canje } from './recompensas/canje.entity';
 
 @Module({
   imports: [
@@ -19,13 +24,15 @@ import { Calendario } from './calendar/calendario.entity';
       username: 'yura_user',
       password: 'yura_password',
       database: 'yura_db',
-      entities: [User, Residuo, Calendario],
-      synchronize: true, // Auto-create tables for Hito 3
+      entities: [User, Residuo, Calendario, HistorialPunto, Recompensa, Canje],
+      synchronize: true,
     }),
     UsersModule, 
     AuthModule, 
     GuideModule, 
-    CalendarModule
+    CalendarModule, 
+    GamificacionModule, 
+    RecompensasModule
   ],
   controllers: [AppController],
   providers: [AppService],

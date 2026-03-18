@@ -1,0 +1,34 @@
+<div class="container" style="animation: fadeIn 0.5s ease-out; max-width: 650px; margin: 0 auto; padding-bottom: 30px;">
+  <div style="margin-bottom: 24px; text-align: center;">
+    <h2 style="font-size: 2.2rem; color: var(--text-dark); letter-spacing: -0.5px; font-weight: 800;">Salón de la Fama</h2>
+    <p style="color: var(--text-light); font-size: 1.1rem;">Los vecinos más comprometidos de la ciudad.</p>
+  </div>
+
+  <div *ngIf="loading" style="text-align: center; color: var(--text-light); padding: 40px;">Cargando ranking en tiempo real...</div>
+
+  <!-- Posición del usuario actual (si no está en el top 3) -->
+  <div *ngIf="!loading && userRank" class="rank-card user-rank">
+    <div style="display:flex; width: 100%; align-items: center;">
+      <div class="rank-num">#{{ userRank.posicion }}</div>
+      <div class="rank-name" style="display: flex; flex-direction: column;">
+        <span>Tú / Mi Perfil</span>
+        <span style="font-size: 0.8rem; opacity: 0.8; font-weight: 600;">Sigue reciclando para subir</span>
+      </div>
+      <div class="rank-pts">{{ userRank.puntos }} PTS</div>
+    </div>
+  </div>
+
+  <div style="margin: 24px 0 16px 0; border-bottom: 2px solid #eee;">
+    <h3 style="font-size: 1.1rem; color: var(--text-light); font-weight: 800; text-transform: uppercase; margin-bottom: 8px;">Top 10 Global 🌍</h3>
+  </div>
+
+  <div *ngFor="let user of ranking; let i = index" class="rank-card" [ngClass]="{'podium-bg': i < 3}">
+    <div class="rank-num" [ngClass]="{'rank-1': i===0, 'rank-2': i===1, 'rank-3': i===2}">
+      {{ i === 0 ? '👑' : i === 1 ? '🥈' : i === 2 ? '🥉' : i + 1 }}
+    </div>
+    <div class="rank-name">{{ user.nombre }}</div>
+    <div class="rank-pts">{{ user.puntos }} PTS</div>
+  </div>
+  
+  <p style="text-align: center; margin-top: 30px; font-size: 0.9rem; color: var(--text-light); font-weight: 600;">Compite sanamente y lidera el cambio medioambiental.</p>
+</div>

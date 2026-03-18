@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,6 +10,7 @@ import { CommonModule } from '@angular/common';
 })
 export class DashboardComponent implements OnInit {
   user: any;
+  id_usuario = 0;
   todayResiduo = 'Plástico';
   nextCollection = 'Mañana: Orgánico';
   tips = [
@@ -16,21 +18,17 @@ export class DashboardComponent implements OnInit {
     'Separar bien tus residuos ayuda a que los recolectores trabajen de forma digna y segura.'
   ];
 
+  constructor(private http: HttpClient) {}
+
   ngOnInit() {
     if(typeof localStorage !== 'undefined') {
-      const u = localStorage.getItem('user');
-      if (u) this.user = JSON.parse(u);
-    }
-    this.checkNotifications();
-  }
-
-  checkNotifications() {
-    if (typeof window !== 'undefined' && 'Notification' in window) {
-      if (Notification.permission === 'granted') {
-        new Notification('Yura PWA', { body: 'Hoy toca sacar: ' + this.todayResiduo });
-      } else if (Notification.permission !== 'denied') {
-        Notification.requestPermission();
+      const uStr = localStorage.getItem('user');
+      if (uStr) {
+        const u = JSON.parse(uStr);
+        this.user = u;
+        this.id_usuario = u.usuario?.id_usuario || u.id_usuario;
       }
     }
   }
+
 }

@@ -1,0 +1,47 @@
+<div class="container" style="animation: fadeIn 0.5s ease-out; max-width: 700px; margin: 0 auto; padding-bottom: 30px;">
+  <div style="margin-bottom: 24px; text-align: center;">
+    <span style="display: inline-block; padding: 4px 12px; background: rgba(243, 156, 18, 0.1); color: var(--secondary); font-weight: 700; border-radius: 20px; font-size: 0.85rem; margin-bottom: 12px; letter-spacing: 0.5px; text-transform: uppercase;">Tienes {{puntos_actuales}} Puntos Disponibles</span>
+    <h2 style="font-size: 2.2rem; color: var(--text-dark); letter-spacing: -0.5px; font-weight: 800;">Catálogo de Premios</h2>
+    <p style="color: var(--text-light); font-size: 1.1rem;">Intercambia tus Yura-Puntos por beneficios reales.</p>
+  </div>
+
+  <div *ngIf="msg" style="padding: 12px 20px; background: #FFF3CD; color: #856404; font-weight: 700; border-radius: 12px; margin-bottom: 20px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-left: 4px solid #F1C40F;">
+    {{ msg }}
+  </div>
+
+  <div *ngIf="loading" style="text-align: center; color: var(--text-light); padding: 40px;">Cargando inventario de premios...</div>
+
+  <div *ngFor="let rec of recompensas" class="reward-card">
+    <div class="reward-icon" style="font-size: 3.5rem;">
+      <span *ngIf="rec.imagen_url === 'cupon'">🎟️</span>
+      <span *ngIf="rec.imagen_url === 'comida'">🥗</span>
+      <span *ngIf="rec.imagen_url === 'helado'">🍦</span>
+      <span *ngIf="rec.imagen_url === 'bolsa'">🛍️</span>
+      <span *ngIf="rec.imagen_url === 'farmacia'">💊</span>
+      <span *ngIf="rec.imagen_url === 'carrito'">🛒</span>
+      <span *ngIf="rec.imagen_url === 'regalo'">🎁</span>
+      <span *ngIf="rec.imagen_url === 'planta'">🌱</span>
+      <span *ngIf="rec.imagen_url === 'bus'">🚌</span>
+      <span *ngIf="rec.imagen_url === 'cine'">🍿</span>
+      <span *ngIf="rec.imagen_url === 'gym'">💪</span>
+      <span *ngIf="rec.imagen_url === 'tv'">🎬</span>
+      <span *ngIf="!['cupon','comida','helado','bolsa','farmacia','carrito','regalo','planta','bus','cine','gym','tv'].includes(rec.imagen_url)">🎁</span>
+    </div>
+    <div style="flex-grow: 1;">
+      <h4 style="font-weight: 800; font-size: 1.2rem; color: var(--text-dark); margin: 0 0 4px 0;">{{ rec.nombre }}</h4>
+      <p style="color: var(--text-light); font-size: 0.95rem; margin: 0 0 8px 0;">{{ rec.descripcion }}</p>
+      <div style="display: inline-block; background: #E8F5E9; color: var(--primary-dark); padding: 4px 10px; border-radius: 6px; font-weight: 800; font-size: 0.8rem;">
+        🪙 {{ rec.puntos_requeridos }} PTS
+      </div>
+    </div>
+    <div>
+      <button 
+        class="btn-canjear" 
+        [ngClass]="puntos_actuales >= rec.puntos_requeridos ? 'btn-valid' : 'btn-disabled'"
+        [disabled]="puntos_actuales < rec.puntos_requeridos"
+        (click)="canjear(rec.id)">
+        {{ puntos_actuales >= rec.puntos_requeridos ? 'Canjear' : 'Bloqueado' }}
+      </button>
+    </div>
+  </div>
+</div>
