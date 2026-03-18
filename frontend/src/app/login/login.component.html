@@ -1,0 +1,40 @@
+<div class="container" style="display: flex; min-height: 85vh; align-items: center; justify-content: center; animation: fadeIn 0.6s ease-out;">
+  <div class="card" style="width: 100%; max-width: 400px; padding: 40px 32px; border: none; box-shadow: 0 20px 40px rgba(0,0,0,0.05); text-align: center;">
+    <div style="margin-bottom: 32px;">
+      <div style="font-size: 4rem; margin-bottom: -10px;">🌍</div>
+      <h1 style="background: linear-gradient(135deg, var(--primary-dark), var(--primary)); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 3rem; margin-bottom: 8px; font-weight: 900; letter-spacing: -1px;">Yura</h1>
+      <p style="color: var(--text-light); font-size: 1.1rem; font-weight: 500;">{{ isRegister ? 'Únete al movimiento limpio' : 'Bienvenido de vuelta' }}</p>
+    </div>
+
+    <div *ngIf="error" style="background: var(--danger); color: white; padding: 12px; border-radius: 8px; margin-bottom: 20px; font-size: 0.95rem; text-align: center; font-weight: 500;">
+      {{ error }}
+    </div>
+
+    <form (ngSubmit)="onSubmit()" #authForm="ngForm">
+      <div class="form-group" *ngIf="isRegister">
+        <label class="form-label">Nombre</label>
+        <input type="text" class="form-input" name="nombre" [(ngModel)]="user.nombre" required placeholder="Tu nombre">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-input" name="email" [(ngModel)]="user.email" required placeholder="tu@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Contraseña</label>
+        <input type="password" class="form-input" name="password" [(ngModel)]="user.password" required placeholder="********">
+      </div>
+      <button type="submit" class="btn btn-primary" style="margin-top: 10px; font-size: 1.1rem;" [disabled]="!authForm.form.valid || loading">
+        {{ loading ? 'Cargando...' : (isRegister ? 'Registrarse' : 'Ingresar') }}
+      </button>
+    </form>
+    
+    <div style="text-align: center; margin-top: 24px;">
+      <p style="font-size: 0.95rem; color: var(--text-light);">
+        {{ isRegister ? '¿Ya tienes cuenta?' : '¿No tienes cuenta?' }}
+        <a href="javascript:void(0)" (click)="toggleMode()" style="color: var(--primary-dark); font-weight: 700; text-decoration: none;">
+          {{ isRegister ? 'Inicia sesión' : 'Regístrate' }}
+        </a>
+      </p>
+    </div>
+  </div>
+</div>

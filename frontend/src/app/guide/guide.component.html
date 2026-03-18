@@ -1,0 +1,74 @@
+<div class="container" style="animation: fadeIn 0.5s ease-out;">
+  <div style="margin-bottom: 24px; text-align: center;">
+    <span style="display: inline-block; padding: 4px 12px; background: rgba(52, 152, 219, 0.1); color: var(--info); font-weight: 700; border-radius: 20px; font-size: 0.8rem; margin-bottom: 12px; letter-spacing: 0.5px; text-transform: uppercase;">Aprende & Impacta</span>
+    <h2 style="font-size: 2.2rem; color: var(--text-dark); letter-spacing: -0.5px; font-weight: 800;">Guía Yura</h2>
+    <p style="color: var(--text-light); font-size: 1.05rem; line-height: 1.5; margin-top: 8px;">Conviértete en experto separando residuos. Sigue estas reglas simples y haz que el sistema funcione para todos.</p>
+  </div>
+
+  <div *ngIf="loading" style="text-align: center; padding: 40px; color: var(--text-light);">
+    <div style="font-size: 2rem; animation: pulse 1.5s infinite;">🔄</div>
+    <p style="font-weight: 500; margin-top: 12px;">Cargando conocimiento verde...</p>
+  </div>
+  
+  <div *ngIf="error" style="text-align: center; padding: 20px; background: #ffebee; color: #c62828; border-radius: 12px; margin-bottom: 20px; font-weight: 600;">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && !error">
+    <div style="display: flex; gap: 12px; justify-content: center; margin-bottom: 24px;">
+      <button (click)="setTab('reciclable')" 
+              [style.background]="activeTab === 'reciclable' ? 'var(--primary)' : 'transparent'"
+              [style.color]="activeTab === 'reciclable' ? 'white' : 'var(--text-light)'"
+              [style.border]="activeTab === 'reciclable' ? '2px solid var(--primary)' : '2px solid var(--border-color)'"
+              style="padding: 10px 20px; border-radius: 30px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+        ♻️ Reciclables
+      </button>
+      <button (click)="setTab('no-reciclable')" 
+              [style.background]="activeTab === 'no-reciclable' ? '#566573' : 'transparent'"
+              [style.color]="activeTab === 'no-reciclable' ? 'white' : 'var(--text-light)'"
+              [style.border]="activeTab === 'no-reciclable' ? '2px solid #566573' : '2px solid var(--border-color)'"
+              style="padding: 10px 20px; border-radius: 30px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+        🗑️ No Reciclables
+      </button>
+    </div>
+
+    <!-- Tabs content -->
+    <div *ngIf="activeTab === 'reciclable'" style="display: flex; flex-direction: column; gap: 20px; animation: fadeIn 0.4s ease-out;">
+      <div *ngFor="let res of residuosReciclables" class="card" style="display: flex; flex-direction: column; padding: 24px; border-top: 4px solid var(--primary); transition: transform 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+        <div style="display: flex; align-items: center; margin-bottom: 16px;">
+          <div style="background: linear-gradient(135deg, #F8F9FA, #E9ECEF); border-radius: 16px; width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; flex-shrink: 0; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid var(--border-color);">
+            {{ getIcon(res.nombre) }}
+          </div>
+          <h3 style="font-size: 1.4rem; margin-left: 16px; color: var(--text-dark); font-weight: 800;">{{ res.nombre }}</h3>
+        </div>
+        <div>
+          <p style="font-size: 1rem; color: var(--text-light); line-height: 1.6; margin: 0 0 16px 0; font-weight: 500;">{{ res.descripcion }}</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px;" *ngIf="res.ejemplos">
+            <span *ngFor="let ej of getEjemplos(res.ejemplos)" style="background: var(--bg-color); color: var(--text-dark); border: 1px solid var(--border-color); padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">
+              ✓ {{ ej }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div *ngIf="activeTab === 'no-reciclable'" style="display: flex; flex-direction: column; gap: 20px; animation: fadeIn 0.4s ease-out;">
+      <div *ngFor="let res of residuosNoReciclables" class="card" style="display: flex; flex-direction: column; padding: 24px; border-top: 4px solid #566573; transition: transform 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+        <div style="display: flex; align-items: center; margin-bottom: 16px;">
+          <div style="background: linear-gradient(135deg, #F8F9FA, #E9ECEF); border-radius: 16px; width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; flex-shrink: 0; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid var(--border-color);">
+            {{ getIcon(res.nombre) }}
+          </div>
+          <h3 style="font-size: 1.4rem; margin-left: 16px; color: var(--text-dark); font-weight: 800;">{{ res.nombre }}</h3>
+        </div>
+        <div>
+          <p style="font-size: 1rem; color: var(--text-light); line-height: 1.6; margin: 0 0 16px 0; font-weight: 500;">{{ res.descripcion }}</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px;" *ngIf="res.ejemplos">
+            <span *ngFor="let ej of getEjemplos(res.ejemplos)" style="background: #fdfdfd; color: var(--text-light); border: 1px dashed var(--border-color); padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">
+              ❌ {{ ej }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

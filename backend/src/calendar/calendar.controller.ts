@@ -1,0 +1,12 @@
+import { Controller, Get } from '@nestjs/common';
+import { CalendarService } from './calendar.service';
+
+@Controller('calendario')
+export class CalendarController {
+  constructor(private readonly calendarService: CalendarService) {}
+
+  @Get()
+  getAll() {
+    return this.calendarService.getAll();
+  }
+}

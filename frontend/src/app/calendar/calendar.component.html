@@ -1,0 +1,41 @@
+<div class="container" style="max-width: 900px; margin: 0 auto; animation: fadeIn 0.5s ease-out;">
+  <div style="margin-bottom: 32px; text-align: center;">
+    <span style="display: inline-block; padding: 4px 12px; background: rgba(52, 152, 219, 0.1); color: var(--info); font-weight: 700; border-radius: 20px; font-size: 0.8rem; margin-bottom: 12px; letter-spacing: 0.5px; text-transform: uppercase;">Logística Mensual de {{ monthName }}</span>
+    <h2 style="font-size: 2.2rem; color: var(--text-dark); letter-spacing: -0.5px; font-weight: 800;">Mes de Recolección</h2>
+    <p style="color: var(--text-light); font-size: 1.05rem; line-height: 1.5; margin-top: 8px;">Conoce exactamente cuándo pasará el camión por tu sector este mes.</p>
+  </div>
+
+  <div *ngIf="loading" style="text-align: center; padding: 40px; color: var(--text-light);">
+    <div style="font-size: 2rem; animation: pulse 1.5s infinite;">🔄</div>
+    <p style="font-weight: 500; margin-top: 12px;">Generando mapa de rutas...</p>
+  </div>
+  
+  <div *ngIf="error" style="text-align: center; padding: 20px; background: #ffebee; color: #c62828; border-radius: 12px; margin-bottom: 20px; font-weight: 600;">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && !error" class="card" style="padding: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: none;">
+    <div class="scroll-wrapper" style="overflow-x: auto; padding-bottom: 12px;">
+      <div style="min-width: 650px;">
+        <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; text-align: center; font-weight: 800; font-size: 0.9rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px;">
+            <div *ngFor="let w of weekDays">{{ w }}</div>
+        </div>
+        
+        <div class="cal-grid">
+            <div *ngFor="let day of monthDays" 
+                 class="cal-day" 
+                 [class.has-pickup]="day.pickup"
+                 [class.empty-day]="day.empty"
+                 [class.is-today]="day.isToday">
+                <div *ngIf="!day.empty" style="display: flex; flex-direction: column; height: 100%;">
+                    <div class="day-num" [style.color]="day.isToday ? 'var(--primary-dark)' : 'var(--text-dark)'">{{ day.date }}</div>
+                    <div *ngIf="day.pickup" class="pickup-badge" [style.background]="day.color">
+                        {{ day.pickup }}
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
