@@ -22,6 +22,14 @@ export class GuideComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
+    if(typeof localStorage !== 'undefined') {
+      const userStr = localStorage.getItem('user');
+      if (userStr) {
+        const user = JSON.parse(userStr);
+        const id_usuario = user.usuario?.id_usuario || user.id_usuario;
+        this.http.post('http://localhost:3000/gamificacion/sumar', { id_usuario, accion: 'VER_GUIA' }).subscribe({ next: () => {}, error: () => {} });
+      }
+    }
     this.http.get<any[]>('http://localhost:3000/residuos').subscribe({
       next: (data) => {
         // ID 9 is 'Basura Común (No Reciclable)'

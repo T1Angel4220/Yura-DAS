@@ -13,4 +13,7 @@ export class User {
 
   @Column({ name: 'password', length: 255 })
   password: string;
+
+  @Column({ name: 'puntos', default: 0 })
+  puntos: number;
 }
