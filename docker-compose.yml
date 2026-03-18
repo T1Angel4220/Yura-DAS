@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: yura_db
+    environment:
+      POSTGRES_USER: yura_user
+      POSTGRES_PASSWORD: yura_password
+      POSTGRES_DB: yura_db
+    ports:
+      - '5433:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
