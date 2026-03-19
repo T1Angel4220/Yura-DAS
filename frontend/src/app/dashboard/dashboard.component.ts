@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 export class DashboardComponent implements OnInit {
   user: any;
   id_usuario = 0;
+  validacionStatus: any = { estado: 'pendiente' };
   todayResiduo = 'Plástico';
   nextCollection = 'Mañana: Orgánico';
   tips = [
@@ -27,6 +28,11 @@ export class DashboardComponent implements OnInit {
         const u = JSON.parse(uStr);
         this.user = u;
         this.id_usuario = u.usuario?.id_usuario || u.id_usuario;
+        
+        this.http.get(`http://localhost:3000/logistica/validacion-hoy/${this.id_usuario}`).subscribe({
+          next: (res: any) => this.validacionStatus = res,
+          error: () => this.validacionStatus = { estado: 'pendiente' }
+        });
       }
     }
   }

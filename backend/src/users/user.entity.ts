@@ -16,4 +16,7 @@ export class User {
 
   @Column({ name: 'puntos', default: 0 })
   puntos: number;
+
+  @Column({ name: 'rol', length: 20, default: 'ciudadano' })
+  rol: string;
 }

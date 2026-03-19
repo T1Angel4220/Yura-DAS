@@ -14,6 +14,11 @@ import { RecompensasModule } from './recompensas/recompensas.module';
 import { HistorialPunto } from './gamificacion/historial-punto.entity';
 import { Recompensa } from './recompensas/recompensa.entity';
 import { Canje } from './recompensas/canje.entity';
+import { LogisticaModule } from './logistica/logistica.module';
+import { Ruta } from './logistica/ruta.entity';
+import { RutaDetalle } from './logistica/ruta-detalle.entity';
+import { Validacion } from './logistica/validacion.entity';
+import { RecoleccionAcopio } from './logistica/recoleccion-acopio.entity';
 
 @Module({
   imports: [
@@ -24,7 +29,11 @@ import { Canje } from './recompensas/canje.entity';
       username: 'yura_user',
       password: 'yura_password',
       database: 'yura_db',
-      entities: [User, Residuo, Calendario, HistorialPunto, Recompensa, Canje],
+      entities: [
+        User, Residuo, Calendario, 
+        HistorialPunto, Recompensa, Canje, 
+        Ruta, RutaDetalle, Validacion, RecoleccionAcopio
+      ],
       synchronize: true,
     }),
     UsersModule, 
@@ -32,7 +41,8 @@ import { Canje } from './recompensas/canje.entity';
     GuideModule, 
     CalendarModule, 
     GamificacionModule, 
-    RecompensasModule
+    RecompensasModule, 
+    LogisticaModule
   ],
   controllers: [AppController],
   providers: [AppService],

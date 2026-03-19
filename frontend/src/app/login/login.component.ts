@@ -37,7 +37,15 @@ export class LoginComponent {
         if(typeof localStorage !== 'undefined'){
           localStorage.setItem('user', JSON.stringify(res));
         }
-        this.router.navigate(['/dashboard']);
+        
+        const userObj = res.usuario || res.user || res;
+        if (userObj.rol === 'conductor') {
+           this.router.navigate(['/driver']);
+        } else if (userObj.rol === 'admin') {
+           this.router.navigate(['/admin']);
+        } else {
+           this.router.navigate(['/dashboard']);
+        }
         this.loading = false;
       },
       error: (err) => {
