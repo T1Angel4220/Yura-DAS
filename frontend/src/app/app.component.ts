@@ -26,4 +26,16 @@ export class AppComponent {
     }
     return false;
   }
+
+  isCitizen() {
+    if(isPlatformBrowser(this.platformId)){
+      const uStr = localStorage.getItem('user');
+      if (uStr) {
+        const u = JSON.parse(uStr);
+        const userObj = u.usuario || u.user || u;
+        return !userObj.rol || userObj.rol === 'ciudadano';
+      }
+    }
+    return false;
+  }
 }

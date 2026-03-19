@@ -1,4 +1,4 @@
-<header class="app-header" *ngIf="isLoggedIn()">
+<header class="app-header" *ngIf="isLoggedIn() && isCitizen()">
   <div class="app-title">♻️ Yura PWA</div>
   <button class="btn btn-primary" style="padding: 6px 12px; width: auto; font-size: 0.85rem; box-shadow: none;" (click)="logout()">Salir</button>
 </header>
@@ -7,7 +7,7 @@
   <router-outlet></router-outlet>
 </main>
 
-<nav class="bottom-nav" *ngIf="isLoggedIn()">
+<nav class="bottom-nav" *ngIf="isLoggedIn() && isCitizen()">
   <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
     <div class="nav-icon">🏠</div>
     Inicio

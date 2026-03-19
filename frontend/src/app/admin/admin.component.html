@@ -1,0 +1,45 @@
+<div class="container" style="max-width: 800px; padding-bottom: 40px; animation: fadeIn 0.4s ease-in;">
+  
+  <div style="background: var(--text-dark); color: white; padding: 25px 20px; border-radius: 16px; margin-bottom: 24px; box-shadow: 0 10px 20px rgba(0,0,0,0.15);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+      <h2 style="font-size: 1.8rem; margin: 0; font-weight: 800;">Panel Administrador ⚙️</h2>
+      <span style="background: var(--info); color: white; padding: 4px 12px; border-radius: 20px; font-weight: 700; font-size: 0.8rem;">Modo Gestor</span>
+    </div>
+    <p style="margin: 0; font-size: 1rem; opacity: 0.9;">Gestión de Rutas y Logística Municipal</p>
+  </div>
+
+  <div class="card" style="box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+    <h3 style="font-size: 1.2rem; color: var(--text-dark); font-weight: 800; margin-bottom: 16px;">Crear Nueva Ruta de Recolección</h3>
+    
+    <div class="form-group">
+      <label class="form-label">Nombre de la Ruta (Ej. Ruta Centro 1)</label>
+      <input type="text" class="form-input" [(ngModel)]="nuevaRuta.nombre" placeholder="Nombre descriptivo">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Zona Asignada</label>
+      <input type="text" class="form-input" [(ngModel)]="nuevaRuta.zona" placeholder="Norte, Sur, Este, etc.">
+    </div>
+
+    <button class="btn btn-primary" (click)="crearRuta()" [disabled]="!nuevaRuta.nombre || loading">
+      {{ loading ? 'Creando...' : '+ Configurar Nueva Ruta' }}
+    </button>
+  </div>
+
+  <h3 style="font-size: 1.1rem; color: var(--text-light); font-weight: 800; text-transform: uppercase; margin-top: 32px; margin-bottom: 16px; border-bottom: 2px solid #eee; padding-bottom: 8px;">Rutas Activas (Logística)</h3>
+
+  <div *ngIf="rutas.length === 0" style="text-align: center; color: var(--text-light); padding: 30px;">
+    No hay rutas definidas en el sistema.
+  </div>
+
+  <div class="grid-2">
+    <div *ngFor="let ruta of rutas" class="card" style="border-left: 4px solid var(--info); transition: transform 0.2s; padding: 16px;">
+      <h4 style="font-size: 1.2rem; font-weight: 800; margin: 0 0 5px 0;">{{ ruta.nombre }}</h4>
+      <p style="margin: 0; color: var(--text-light); font-size: 0.95rem;">Zona: <strong>{{ ruta.zona || 'Global' }}</strong></p>
+      <div style="margin-top: 10px; font-size: 0.8rem; background: #e3f2fd; color: #1565c0; padding: 4px 8px; border-radius: 6px; display: inline-block; font-weight: 700;">
+        🚚 Asignable a Conductor
+      </div>
+    </div>
+  </div>
+
+</div>

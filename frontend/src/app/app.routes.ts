@@ -6,6 +6,8 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RewardsComponent } from './rewards/rewards.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
+import { DriverComponent } from './driver/driver.component';
+import { AdminComponent } from './admin/admin.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -15,5 +17,7 @@ export const routes: Routes = [
   { path: 'calendar', component: CalendarComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'rewards', component: RewardsComponent },
-  { path: 'leaderboard', component: LeaderboardComponent }
+  { path: 'leaderboard', component: LeaderboardComponent },
+  { path: 'driver', component: DriverComponent },
+  { path: 'admin', component: AdminComponent }
 ];

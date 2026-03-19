@@ -1,0 +1,78 @@
+<div class="driver-container">
+  
+  <!-- Premium Hero Dashboard for Driver -->
+  <div class="hero-dashboard">
+    <div class="hero-header">
+      <h2 class="hero-title">🚚 Panel Operativo</h2>
+      <div class="hero-chips">
+        <button class="chip-btn chip-active">● Activo</button>
+        <button class="chip-btn chip-logout" (click)="logout()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        </button>
+      </div>
+    </div>
+    
+    <div class="route-info">
+      <span class="route-label">Ruta Asignada: Zona Central #1</span>
+      
+      <!-- Dynamic Target Card -->
+      <div class="target-box" [ngStyle]="{'borderColor': todayColor}">
+        <div>
+          <h3 class="target-day">Hoy es {{ todayName }}</h3>
+          <p class="target-desc">{{ todayDesc }}</p>
+        </div>
+        <div class="target-badge" [ngStyle]="{'backgroundColor': todayColor}">
+          {{ todayRecoleccion }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="section-title">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+    Listado de Casas
+  </h3>
+
+  <div *ngIf="usuarios.length === 0" style="text-align: center; color: #7f8c8d; padding: 40px; font-weight: 600; font-size: 1.1rem; background: rgba(255,255,255,0.5); border-radius: 20px;">
+    Cargando la ruta de hoy...
+  </div>
+
+  <!-- Citizens List -->
+  <div *ngFor="let user of usuarios" class="validator-card" [class.evaluated]="user.evaluado">
+    
+    <div class="validator-header">
+      <div>
+        <h4 class="citizen-name">{{ user.nombre }}</h4>
+        <p class="citizen-address">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/></svg>
+          ID Vecino: {{ user.id_usuario }} • {{ user.email }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Actions (Visible Only When Not Evaluated) -->
+    <div class="validator-actions" *ngIf="!user.evaluado">
+      <button class="btn-validar btn-danger" (click)="validar(user, 'incorrecto')">
+        <span>❌</span>
+        No recicló
+      </button>
+      <button class="btn-validar btn-success" (click)="validar(user, 'correcto')">
+        <span>✅</span>
+        Recicló (+20 pts)
+      </button>
+    </div>
+    
+    <!-- Result State (Visible After Action) -->
+    <div *ngIf="user.evaluado" class="result-state">
+      <div *ngIf="user.resultado === 'correcto'" class="result-badge result-correcto">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        Recicló Correctamente.
+      </div>
+      <div *ngIf="user.resultado === 'incorrecto'" class="result-badge result-incorrecto">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        No recicló.
+      </div>
+    </div>
+
+  </div>
+</div>

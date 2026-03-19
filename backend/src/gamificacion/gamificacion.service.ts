@@ -73,6 +73,7 @@ export class GamificacionService {
   async obtenerRankingConUsuario(id_usuario: number) {
     const top10 = await this.userRepository.find({
       select: ['id_usuario', 'nombre', 'puntos'],
+      where: { rol: 'ciudadano' },
       order: { puntos: 'DESC' },
       take: 10
     });
@@ -81,7 +82,7 @@ export class GamificacionService {
     if (!user) return { top10, userRank: null };
 
     const superiorCount = await this.userRepository.count({
-      where: { puntos: MoreThan(user.puntos) }
+      where: { puntos: MoreThan(user.puntos), rol: 'ciudadano' }
     });
 
     return { 
